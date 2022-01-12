@@ -50,6 +50,46 @@ def index_landing(request):
     return render(request, 'rawdjango/index-landingpage.html', context=context)
 
 
+def typography(request):
+    context = {
+        'title': "Typography",
+        'active_features': 'active',
+        'active_typography': 'active'
+
+    }
+    return render(request, 'rawdjango/typography.html', context=context)
+
+
+def components(request):
+    context = {
+        'title': "Components",
+        'active_features': 'active',
+        'active_components': 'active'
+
+    }
+    return render(request, 'rawdjango/components.html', context=context)
+
+
+def icons(request):
+    context = {
+        'title': "Icons",
+        'active_features': 'active',
+        'active_icons': 'active'
+
+    }
+    return render(request, 'rawdjango/icons.html', context=context)
+
+
+def icons2(request):
+    context = {
+        'title': "Icons",
+        'active_features': 'active',
+        'active_icons2': 'active'
+
+    }
+    return render(request, 'rawdjango/icon-variations.html', context=context)
+
+
 def about(request):
     context = {
         'title': "About",

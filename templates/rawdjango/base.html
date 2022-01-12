@@ -92,13 +92,13 @@
                         <li class="{{ active_landing }}"><a href="{% url 'index_landing' %}">Landing page</a></li>
                       </ul>
                     </li>
-                    <li class="dropdown">
+                    <li class="dropdown {{ active_features }}" >
                       <a href="#">Features <i class="icon-angle-down"></i></a>
                       <ul class="dropdown-menu">
-                        <li><a href="typography.html">Typography</a></li>
-                        <li><a href="components.html">Components</a></li>
-                        <li><a href="icons.html">Icons</a></li>
-                        <li><a href="icon-variations.html">Icon variations</a></li>
+                        <li class="{{ active_typography }}"><a href="{% url 'typography' %}">Typography</a></li>
+                        <li class="{{ active_components }}"><a href="{% url 'components' %}">Components</a></li>
+                        <li class="{{ active_icons }}"><a href="{% url 'icons' %}">Icons</a></li>
+                        <li class="{{ active_icons2 }}"><a href="{% url 'icons2' %}">Icon variations</a></li>
                         <li class="dropdown"><a href="#">3rd menus<i class="icon-angle-right"></i></a>
                           <ul class="dropdown-menu sub-menu-level1">
                             <li><a href="{% url 'index' %}">Sub menu</a></li>

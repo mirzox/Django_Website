@@ -8,6 +8,9 @@ urlpatterns = [
     path('home3/', views.index_alt3, name='index_alt3'),
     path('home4/', views.index_alt4, name='index_alt4'),
     path('homelanging/', views.index_landing, name='index_landing'),
-
+    path('typography/', views.typography, name='typography'),
+    path('components/', views.components, name='components'),
+    path('icons/', views.icons, name='icons'),
+    path('icons2/', views.icons2, name='icons2'),
     path('about/', views.about, name='about')
 ]
