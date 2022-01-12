@@ -1,5 +1,4 @@
 {% extends 'rawdjango/base.html' %}
-{% load statis %}
 
   {% block content %}
 
@@ -9,7 +8,7 @@
           <div class="span12">
             <div class="inner-heading">
               <ul class="breadcrumb">
-                <li><a href="index.html">Home</a> <i class="icon-angle-right"></i></li>
+                <li><a href="{% url 'index' %}">Home</a> <i class="icon-angle-right"></i></li>
                 <li><a href="#">Pages</a> <i class="icon-angle-right"></i></li>
                 <li class="active">Typography</li>
               </ul>
