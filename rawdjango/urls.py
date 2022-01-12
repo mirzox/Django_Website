@@ -12,5 +12,6 @@ urlpatterns = [
     path('components/', views.components, name='components'),
     path('icons/', views.icons, name='icons'),
     path('icons2/', views.icons2, name='icons2'),
-    path('about/', views.about, name='about')
+    path('about/', views.about, name='about'),
+    path('faq/', views.faq, name='faq'),
 ]

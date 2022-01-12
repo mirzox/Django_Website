@@ -110,8 +110,8 @@
                     <li class="dropdown {{ active_pages }}">
                       <a href="#">Pages <i class="icon-angle-down"></i></a>
                       <ul class="dropdown-menu">
-                        <li class = "{{ active_about }}"><a href="{% url 'about' %}">About us</a></li>
-                        <li><a href="faq.html">FAQ</a></li>
+                        <li class="{{ active_about }}"><a href="{% url 'about' %}">About us</a></li>
+                        <li class="{{ active_faq }}"><a href="{% url 'faq' %}">FAQ</a></li>
                         <li><a href="team.html">Team</a></li>
                         <li><a href="services.html">Services</a></li>
                         <li><a href="pricingbox.html">Pricing boxes</a></li>

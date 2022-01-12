@@ -98,3 +98,13 @@ def about(request):
 
     }
     return render(request, 'rawdjango/about.html', context=context)
+
+
+def faq(request):
+    context = {
+        'title': "FAQ",
+        'active_pages': 'active',
+        'active_faq': 'active'
+
+    }
+    return render(request, 'rawdjango/faq.html', context=context)
