@@ -14,4 +14,8 @@ urlpatterns = [
     path('icons2/', views.icons2, name='icons2'),
     path('about/', views.about, name='about'),
     path('faq/', views.faq, name='faq'),
+    path('team/', views.team, name='team'),
+    path('services/', views.services, name='services'),
+    path('pricingbox/', views.pricingbox, name='pricingbox'),
+    path('404/', views.page404, name='404'),
 ]

@@ -108,3 +108,43 @@ def faq(request):
 
     }
     return render(request, 'rawdjango/faq.html', context=context)
+
+
+def team(request):
+    context = {
+        'title': "Team",
+        'active_pages': 'active',
+        'active_team': 'active'
+
+    }
+    return render(request, 'rawdjango/team.html', context=context)
+
+
+def services(request):
+    context = {
+        'title': "Services",
+        'active_pages': 'active',
+        'active_services': 'active'
+
+    }
+    return render(request, 'rawdjango/services.html', context=context)
+
+
+def pricingbox(request):
+    context = {
+        'title': "Pricingbox",
+        'active_pages': 'active',
+        'active_pricingbox': 'active'
+
+    }
+    return render(request, 'rawdjango/pricingbox.html', context=context)
+
+
+def page404(request):
+    context = {
+        'title': "404",
+        'active_pages': 'active',
+        'active_404': 'active'
+
+    }
+    return render(request, 'rawdjango/404.html', context=context)

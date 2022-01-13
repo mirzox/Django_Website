@@ -112,10 +112,10 @@
                       <ul class="dropdown-menu">
                         <li class="{{ active_about }}"><a href="{% url 'about' %}">About us</a></li>
                         <li class="{{ active_faq }}"><a href="{% url 'faq' %}">FAQ</a></li>
-                        <li><a href="team.html">Team</a></li>
-                        <li><a href="services.html">Services</a></li>
-                        <li><a href="pricingbox.html">Pricing boxes</a></li>
-                        <li><a href="404.html">404</a></li>
+                        <li class="{{ active_team }}"><a href="{% url 'team' %}">Team</a></li>
+                        <li class="{{ active_services }}"><a href="{% url 'services' %}">Services</a></li>
+                        <li class="{{ active_pricingbox }}"><a href="{% url 'pricingbox' %}">Pricing boxes</a></li>
+                        <li class="{{ active_404 }}"><a href="{% url '404' %}">404</a></li>
                       </ul>
                     </li>
                     <li class="dropdown">
