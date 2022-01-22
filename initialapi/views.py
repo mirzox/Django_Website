@@ -102,8 +102,8 @@ class SendSMS(APIView):
     def post(self, request):
         user = get_object_or_404(User, username=request.data.get('username'))
         sendmsg = SendMessageFromEmail(
-            sender_email="forsettechbackend@gmail.com",
-            sender_email_password='yzfjwqqjghkxqjix',
+            sender_email="",
+            sender_email_password='',
         )
         email = request.data.get('email')
         if user.email == email:
