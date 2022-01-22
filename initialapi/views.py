@@ -1,4 +1,5 @@
-from django.shortcuts import render
+import os
+
 from rest_framework import viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -102,8 +103,8 @@ class SendSMS(APIView):
     def post(self, request):
         user = get_object_or_404(User, username=request.data.get('username'))
         sendmsg = SendMessageFromEmail(
-            sender_email="",
-            sender_email_password='',
+            sender_email=os.environ.get('EMAIL'),
+            sender_email_password=os.environ.get('EMAIL_PASSWORD'),
         )
         email = request.data.get('email')
         if user.email == email:

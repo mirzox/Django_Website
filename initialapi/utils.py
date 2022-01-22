@@ -2,14 +2,15 @@ import smtplib
 from email.message import EmailMessage
 import secrets
 import string
+import os
 
 
 class SendMessageFromEmail:
     def __init__(self, sender_email, sender_email_password):
         self.sender = sender_email
         self.password = sender_email_password
-        self.port = 465
-        self.server = 'smtp.gmail.com'
+        self.port = os.environ.get('PORT')
+        self.server = os.environ.get('SERVER')
 
     def send_message(self, receiver: str, subject: str, message: str) -> None:
         msg = EmailMessage()
