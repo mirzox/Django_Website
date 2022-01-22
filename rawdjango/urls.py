@@ -18,4 +18,8 @@ urlpatterns = [
     path('services/', views.services, name='services'),
     path('pricingbox/', views.pricingbox, name='pricingbox'),
     path('404/', views.page404, name='404'),
+    path('portfolio-2cols/', views.portfolio, name='portfolio'),
+    path('portfolio-3cols/', views.portfolio2, name='portfolio2'),
+    path('portfolio-4cols/', views.portfolio3, name='portfolio3'),
+    path('portfolio-detail/', views.portfolio4, name='portfolio4'),
 ]
