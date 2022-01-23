@@ -1,8 +1,9 @@
-import smtplib
-from email.message import EmailMessage
-import secrets
-import string
 import os
+import secrets
+import smtplib
+import string
+import random
+from email.message import EmailMessage
 
 
 class SendMessageFromEmail:
@@ -19,7 +20,7 @@ class SendMessageFromEmail:
         msg['To'] = receiver
         msg.set_content(message)
 
-        with smtplib.SMTP_SSL(self.server, self.port) as smtp:
+        with smtplib.SMTP_SSL(self.server, int(self.port)) as smtp:
             smtp.login(self.sender, self.password)
             smtp.send_message(msg)
 
@@ -28,3 +29,11 @@ def generate_password(length=15):
     alphabet = string.ascii_letters + string.digits + '!@#$^&*()_+='
     password = ''.join(secrets.choice(alphabet) for i in range(length))
     return password
+
+
+def generate_code(length=5):
+    return random.randint(10**length, 10**(length+1))
+
+
+def replace_email_symbols_to_asterisks(email: str):
+    return email.replace(email[2: len(email) - 12], '*'*(len(email) - 14))

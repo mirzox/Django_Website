@@ -10,9 +10,11 @@ from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.hashers import make_password
 
 from .serializers import UserSerializer
-from .utils import SendMessageFromEmail, generate_password
+from .utils import SendMessageFromEmail, generate_password, generate_code, replace_email_symbols_to_asterisks
+from .models import OneTimeCode
 
 
 class UserViewSetClass(viewsets.ViewSet):
@@ -25,13 +27,13 @@ class UserViewSetClass(viewsets.ViewSet):
         return Response(data=serializer.data,
                         status=status.HTTP_200_OK)
 
-    def create(self, request):
-        serializer = UserSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(data=serializer.data, status=status.HTTP_201_CREATED)
-        else:
-            return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    # def create(self, request):
+    #     serializer = UserSerializer(data=request.data)
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(data=serializer.data, status=status.HTTP_201_CREATED)
+    #     else:
+    #         return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def retrieve(self, request, pk=None):
         user = get_object_or_404(User, pk=pk)
@@ -71,8 +73,6 @@ class LoginView(ObtainAuthToken):
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
         token, created = Token.objects.get_or_create(user=user)
-        print(created)
-        print(token)
         return Response({
             'token': token.key,
             'user_id': user.pk,
@@ -107,19 +107,47 @@ class SendSMS(APIView):
             sender_email_password=os.environ.get('EMAIL_PASSWORD'),
         )
         email = request.data.get('email')
-        if user.email == email:
-            password = generate_password(20)
-
+        attempt = OneTimeCode.objects.filter(user_id=user.id)
+        if len(attempt) >= 1:
+            return Response({"request": "Вы уже отправляли запрос на восстановление пароля"})
+        elif user.email == email:
+            code = generate_code()
+            OneTimeCode.objects.create(user_id=user, code=code)
             sendmsg.send_message(email,
-                                 'This is test subject',
-                                 'This message from python and your new password = {}'.format(password)
+                                 'Код подтверждения',
+                                 'Ваш код для сброса пароля {}'.format(code)
                                  )
-            return Response({'request': "Your new password send to your email"})
-        return Response({'request': "Your email is invalid"})
+            return Response({'request': "Код для сброса пароля отправлен на вашу почту"})
+        return Response({'request': f"Your email is {replace_email_symbols_to_asterisks(user.email)} \
+                                        please enter this email"})
 
 
 class ResetPassword(APIView):
     def post(self, request):
-        pass
+        user = User.objects.filter(username=request.data.get('username'))
+        onetimecode = get_object_or_404(OneTimeCode, user_id=user.id)
+        print(onetimecode.code)
+        if onetimecode.is_blocked:
+            return Response({"request": "Ваш аккаунт заблокирован!!! Напишите в службу поддержки"})
+
+        elif str(onetimecode.code) == request.data.get('code'):
+            password = generate_password(20)
+            onetimecode.delete()
+            email = user.email
+            user.update(password=make_password(password))
+            sendmsg = SendMessageFromEmail(
+                sender_email=os.environ.get('EMAIL'),
+                sender_email_password=os.environ.get('EMAIL_PASSWORD'),
+            )
+            sendmsg.send_message(email,
+                                 'Сброс пароля для вашей учетной записи',
+                                 f'Ваш новый пароль {password} для аккаунта {email}'
+                                 )
+            return Response({"request": "Новый пароль для вашей учетной записи отправлен на вашу почту"})
+
+        onetimecode.attempt += 1
+        onetimecode.save()
+        return Response({"request": f"У вас осталось {6-onetimecode.attempt} попыток!!!"})
+
 
 
