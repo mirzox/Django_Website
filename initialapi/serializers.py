@@ -23,7 +23,7 @@ class UserSerializer(serializers.ModelSerializer):
         digit_error = re.search(r"\d", value) is None
         uppercase_error = re.search(r"[A-Z]", value) is None
         lowercase_error = re.search(r"[a-z]", value) is None
-        symbol_error = re.search(r"[ !#$%&'()*+,-./[\\\]^_`{|}~" + r'"]', value) is None
+        symbol_error = re.search(r"[!@#$%&'()*+,-./[\\\]^_`{|}~" + r'"]', value) is None
 
         if length_error:
             raise serializers.ValidationError('password must contain 8 symbols')

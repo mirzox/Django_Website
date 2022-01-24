@@ -61,7 +61,7 @@ class UserViewSetClass(viewsets.ViewSet):
             return Response(data=data, status=status.HTTP_204_NO_CONTENT)
         except Exception:
             data = {
-                'request': 'Oops Some thing went wrong'
+                'request': 'Oops Something went wrong'
             }
             return Response(data=data, status=status.HTTP_400_BAD_REQUEST)
 
@@ -125,7 +125,7 @@ class SendSMS(APIView):
 class ResetPassword(APIView):
     def post(self, request):
         user = User.objects.filter(username=request.data.get('username'))
-        onetimecode = get_object_or_404(OneTimeCode, user_id=user.id)
+        onetimecode = get_object_or_404(OneTimeCode, user_id=user[0].id)
         print(onetimecode.code)
         if onetimecode.is_blocked:
             return Response({"request": "Ваш аккаунт заблокирован!!! Напишите в службу поддержки"})
@@ -133,7 +133,7 @@ class ResetPassword(APIView):
         elif str(onetimecode.code) == request.data.get('code'):
             password = generate_password(20)
             onetimecode.delete()
-            email = user.email
+            email = user[0].email
             user.update(password=make_password(password))
             sendmsg = SendMessageFromEmail(
                 sender_email=os.environ.get('EMAIL'),
