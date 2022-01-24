@@ -20,8 +20,8 @@ class OneTimeCode(models.Model):
 
 
 @receiver(post_save, sender=User)
-def set_password(sender, instance, *args, **kwargs):
-    if "pbkdf2_sha256" not in instance.password:
+def set_password(sender, instance, created, **kwargs):
+    if "pbkdf2_sha256" not in instance.password and created:
         password = make_password(instance.password)
         User.objects.filter(pk=instance.id).update(password=password)
 

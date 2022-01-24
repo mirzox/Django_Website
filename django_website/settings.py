@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'rawdjango',
     'initialapi',
     'rest_framework.authtoken',
+    'market'
 ]
 
 MIDDLEWARE = [
