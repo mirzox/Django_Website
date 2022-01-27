@@ -36,4 +36,4 @@ def generate_code(length=5):
 
 
 def replace_email_symbols_to_asterisks(email: str):
-    return email.replace(email[2: len(email) - 12], '*'*(len(email) - 14))
+    return email.replace(email[2: len(email) - 12], '*'*2)
